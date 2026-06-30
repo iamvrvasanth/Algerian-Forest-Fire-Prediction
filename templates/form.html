@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FWI Prediction</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+
+    padding:40px;
+
+}
+
+.container{
+
+    width:100%;
+    max-width:950px;
+
+    background:rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    border-radius:20px;
+
+    padding:45px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
+
+}
+
+h1{
+
+    color:#fff;
+
+    text-align:center;
+
+    font-size:38px;
+
+    margin-bottom:10px;
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#d9d9d9;
+
+    margin-bottom:35px;
+
+    font-size:16px;
+
+}
+
+form{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:22px;
+
+}
+
+.input-box{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+label{
+
+    color:white;
+
+    margin-bottom:8px;
+
+    font-weight:500;
+
+}
+
+input,select{
+
+    height:52px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    padding:0 16px;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:15px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    transition:.3s;
+
+}
+
+input::placeholder{
+
+    color:#d0d0d0;
+
+}
+
+input:focus,
+select:focus{
+
+    border-color:#ff8c42;
+
+    box-shadow:0 0 15px rgba(255,140,66,.35);
+
+}
+
+option{
+
+    color:black;
+
+}
+
+.button-box{
+
+    grid-column:1/3;
+
+    text-align:center;
+
+    margin-top:10px;
+
+}
+
+button{
+
+    width:240px;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    background:linear-gradient(135deg,#ff6b35,#ff9f43);
+
+    transition:.3s;
+
+    box-shadow:0 10px 25px rgba(255,107,53,.4);
+
+}
+
+button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 18px 35px rgba(255,107,53,.5);
+
+}
+
+.result{
+
+    margin-top:35px;
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:15px;
+
+    padding:18px;
+
+    color:white;
+
+    text-align:center;
+
+    font-size:22px;
+
+    font-weight:600;
+
+    border:1px solid rgba(255,255,255,.12);
+
+}
+
+@media(max-width:768px){
+
+form{
+
+grid-template-columns:1fr;
+
+}
+
+.button-box{
+
+grid-column:1;
+
+}
+
+button{
+
+width:100%;
+
+}
+
+.container{
+
+padding:25px;
+
+}
+
+h1{
+
+font-size:30px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Forest Fire Weather Index Prediction</h1>
+
+<p class="subtitle">
+Predict the Fire Weather Index using meteorological observations.
+</p>
+
+<form action="{{ url_for('predict_datapoint') }}" method="POST">
+
+<div class="input-box">
+<label>Temperature (22 - 42 °C)</label>
+<input type="number" name="Temperature"
+min="22" max="42" step="0.1"
+placeholder="22 - 42"
+required>
+</div>
+
+<div class="input-box">
+<label>Relative Humidity (21 - 90 %)</label>
+<input type="number" name="RH"
+min="21" max="90" step="1"
+placeholder="21 - 90"
+required>
+</div>
+
+<div class="input-box">
+<label>Wind Speed (6 - 29 km/h)</label>
+<input type="number" name="Ws"
+min="6" max="29" step="1"
+placeholder="6 - 29"
+required>
+</div>
+
+<div class="input-box">
+<label>Rain (0 - 16.8 mm)</label>
+<input type="number" name="Rain"
+min="0" max="16.8" step="0.1"
+placeholder="0 - 16.8"
+required>
+</div>
+
+<div class="input-box">
+<label>FFMC (28.6 - 96)</label>
+<input type="number" name="FFMC"
+min="28.6" max="96"
+step="0.1"
+placeholder="28.6 - 96"
+required>
+</div>
+
+<div class="input-box">
+<label>DMC (0.7 - 65.9)</label>
+<input type="number" name="DMC"
+min="0.7" max="65.9"
+step="0.1"
+placeholder="0.7 - 65.9"
+required>
+</div>
+
+<div class="input-box">
+<label>ISI (0 - 19)</label>
+<input type="number" name="ISI"
+min="0" max="19"
+step="0.1"
+placeholder="0 - 19"
+required>
+</div>
+
+<div class="input-box">
+<label>Classes</label>
+
+<select name="Classes" required>
+
+<option value="">Select Class</option>
+
+<option value="0">
+Not Fire (0)
+</option>
+
+<option value="1">
+Fire (1)
+</option>
+
+</select>
+
+</div>
+
+<div class="input-box">
+<label>Region</label>
+
+<select name="Region" required>
+
+<option value="">Select Region</option>
+
+<option value="0">
+Bejaia (0)
+</option>
+
+<option value="1">
+Sidi Bel-Abbes (1)
+</option>
+
+</select>
+
+</div>
+
+<div class="button-box">
+
+<button type="submit">
+
+Predict Fire Weather Index
+
+</button>
+
+</div>
+
+</form>
+
+{% if results %}
+
+<div class="result">
+
+Predicted Fire Weather Index : {{ results }}
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
