@@ -223,23 +223,13 @@ Display Result
 
 ---
 
-# Screenshots
-
 ## Home Page
 
-Add a screenshot here.
-
----
-
-## Prediction Form
-
-Add a screenshot here.
-
----
+<img width="1919" height="883" alt="alg1" src="https://github.com/user-attachments/assets/a7d5968e-26c7-455d-924f-a7288e227bbb" />
 
 ## Prediction Result
 
-Add a screenshot here.
+<img width="1890" height="878" alt="alg2" src="https://github.com/user-attachments/assets/dd9e95d7-4cd5-49d2-8ac2-2471e706f990" />
 
 ---
 
