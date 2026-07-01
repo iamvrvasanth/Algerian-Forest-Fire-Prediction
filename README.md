@@ -310,7 +310,7 @@ https://github.com/iamvrvasanth
 
 LinkedIn
 
-https://www.linkedin.com/in/vasanth-v-r/
+https://www.linkedin.com/in/vasanthvr/
 
 ---
 
